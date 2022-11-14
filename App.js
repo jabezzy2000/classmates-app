@@ -1,8 +1,8 @@
 import HomeScreen from "./Screens/HomeScreen";
-import SecondScreen from "./Screens/SecondScreen";
+import SecondScreen from "./Screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ThirdScreen from "./Screens/ThirdScreen";
+import ThirdScreen from "./Screens/ChatScreen";
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,9 +23,9 @@ export default function App() {
         options = {{title: "Chat"}}
         />
         <Tab.Screen
-        name = "Settings"
+        name = "Profile"
         component={SecondScreen}
-        options = {{title: "Settings"}}
+        options = {{title: "Profile"}}
         />
       </Tab.Navigator>
     </NavigationContainer>
