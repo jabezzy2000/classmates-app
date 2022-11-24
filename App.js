@@ -1,4 +1,4 @@
-import HomeScreen from "./Screens/HomeScreen";
+import HomeScreen from "./Screens/Homescreen";
 import SecondScreen from "./Screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
