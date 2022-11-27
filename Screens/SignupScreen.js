@@ -11,15 +11,15 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('cWrnoL69586jYWVZfCu3NUJUZnQwAEBXBzxAxf2h','5asERhXmcU16wX6GdALhKLfrCVliBFZi69CDotkv');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
-export default function LoginScreen({navigation}) {
+export default function signUpScreen({navigation}) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Username"
           value={username}
+          placeholder="Username"
           placeholderTextColor="#003f5c"
           onChangeText={(text) => setUsername(text)}
         />
@@ -27,6 +27,7 @@ export default function LoginScreen({navigation}) {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
+          value={password}
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
@@ -34,15 +35,8 @@ export default function LoginScreen({navigation}) {
         />
       </View>
       <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
+        <Text style={styles.loginText}>Create account</Text>
       </TouchableOpacity>
-      <Button
-        style={styles.Button}
-        onPress={() => {{navigation.navigate("SignUp")}}} 
-        title= "sign up"
-        placeholderTextColor = "003f5c">
-      </Button>
-      
     </View>
    
   );
@@ -73,17 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#00ffff",
   },
-  Button: {
-    backgroundColor: '00ffff',
-    textAlign: "center",
-    placeholderTextColor:'#003f5c',
-    height: 10,
-    width: 10,
-    marginBottom: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 5,
-  },
+
   inputView: {
     backgroundColor: "#00ced1",
     borderRadius: 30,

@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ThirdScreen from "./Screens/ChatScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./Screens/LoginScreen";
+import signUpScreen from "./Screens/SignupScreen";
 
 
 export default function App() {
@@ -29,6 +30,8 @@ export function StackNavigator(){
       options = {{title: "Profile"}}/>
       <Stack.Screen name="chat" component={ThirdScreen} 
       options = {{title: "Chat"}}/>
+      <Stack.Screen name = "SignUp" component = {signUpScreen}
+      options = {{title: "SignUp"}}/>
 </Stack.Navigator>);
 }
 
