@@ -19,7 +19,7 @@ export default function LoginScreen({navigation}) {
         <TextInput
           style={styles.TextInput}
           placeholder="Username"
-          value={username}
+          // value={username}
           placeholderTextColor="#003f5c"
           onChangeText={(text) => setUsername(text)}
         />
@@ -33,8 +33,10 @@ export default function LoginScreen({navigation}) {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
+      <TouchableOpacity onPress={() => {{navigation.navigate("Home")}}} style={styles.loginBtn}>
+        <Text style={styles.loginText}>LOGIN</Text
+        >
+        
       </TouchableOpacity>
       <Button
         style={styles.Button}

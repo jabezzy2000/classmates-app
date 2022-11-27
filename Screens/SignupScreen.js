@@ -18,7 +18,7 @@ export default function signUpScreen({navigation}) {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          value={username}
+        //   value={username}
           placeholder="Username"
           placeholderTextColor="#003f5c"
           onChangeText={(text) => setUsername(text)}
@@ -34,7 +34,8 @@ export default function signUpScreen({navigation}) {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity style={styles.signUpBtn}
+      onPress={() => {{navigation.navigate("Home")}}}>
         <Text style={styles.loginText}>Create account</Text>
       </TouchableOpacity>
     </View>
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   
   },
-  loginBtn: {
+  signUpBtn: {
     width: "80%",
     borderRadius: 25,
     height: 50,
