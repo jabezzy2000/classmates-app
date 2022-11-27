@@ -1,10 +1,10 @@
-import HomeScreen from "./Screens/HomeScreen";
+import HomeScreen from "./Screens/Homescreen";
 import SecondScreen from "./Screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ThirdScreen from "./Screens/ChatScreen";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./Screens/Loginscreen";
+import LoginScreen from "./Screens/LoginScreen";
 
 
 export default function App() {
