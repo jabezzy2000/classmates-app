@@ -106,6 +106,7 @@ async function addUser(username, password, navigation) {
   });
   
   }
+  // To verify that this is in fact the current user, currentAsync can be used
   async function test(createdUser){
     const currentUser = await Parse.User.currentAsync();
     console.log(createdUser === currentUser);
