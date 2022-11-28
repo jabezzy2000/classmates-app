@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ToastAndroid } from 'react-native';
 import Parse from "parse/react-native.js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import React, {FC, ReactElement, useEffect, useState} from 'react';
+import { Alert } from 'react-native';
 
 
 
@@ -11,14 +12,16 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('cWrnoL69586jYWVZfCu3NUJUZnQwAEBXBzxAxf2h','5asERhXmcU16wX6GdALhKLfrCVliBFZi69CDotkv');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
-export default function signUpScreen({navigation}) {
+export default function SignUpScreen({navigation}) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-        //   value={username}
+          value={username}
           placeholder="Username"
           placeholderTextColor="#003f5c"
           onChangeText={(text) => setUsername(text)}
@@ -35,7 +38,7 @@ export default function signUpScreen({navigation}) {
         />
       </View>
       <TouchableOpacity style={styles.signUpBtn}
-      onPress={() => {{navigation.navigate("Home")}}}>
+      onPress={() => {addUser(username, password, navigation)}}>
         <Text style={styles.loginText}>Create account</Text>
       </TouchableOpacity>
     </View>
@@ -80,16 +83,31 @@ const styles = StyleSheet.create({
   },
 });
 
-async function addPerson(username, password) {
-  try {
-    //create a new Parse Object instance
-    const newPerson = new Parse.User();
-    //define the attributes you want for your Object
-    newPerson.setUsername(username);
-    newPerson.setPassword(password);
-    //save it on Back4App Data Store
-    await newPerson.save();
-  } catch (error) {
-    console.log('Error saving new person: ', error);
+async function addUser(username, password, navigation) {
+  return await Parse.User.signUp(username, password)
+  .then((createdUser) => {
+    // Parse.User.signUp returns the already created ParseUser object if successful
+  
+    Alert.alert(
+      'Success!',
+      `User ${createdUser.get('username')} was successfully created!`,
+    );
+    test(createdUser)
+    // Navigation.navigate takes the user to the screen named after the one
+    // passed as parameter
+    navigation.navigate('Home');
+    return true;
+    
+  })
+  .catch((error) => {
+    // signUp can fail if any parameter is blank or failed an uniqueness check on the server
+    Alert.alert('Error!', error.message);
+    return false;
+  });
+  
   }
-}
+  async function test(createdUser){
+    const currentUser = await Parse.User.currentAsync();
+    console.log(createdUser === currentUser);
+  }
+

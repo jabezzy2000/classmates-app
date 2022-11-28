@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
 import Parse from "parse/react-native.js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import React, {FC, ReactElement, useEffect, useState} from 'react';
+import { Alert } from 'react-native';
 
 
 Parse.setAsyncStorage(AsyncStorage);
@@ -12,6 +12,8 @@ Parse.initialize('cWrnoL69586jYWVZfCu3NUJUZnQwAEBXBzxAxf2h','5asERhXmcU16wX6GdAL
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 export default function LoginScreen({navigation}) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -19,7 +21,7 @@ export default function LoginScreen({navigation}) {
         <TextInput
           style={styles.TextInput}
           placeholder="Username"
-          // value={username}
+          value={username}
           placeholderTextColor="#003f5c"
           onChangeText={(text) => setUsername(text)}
         />
@@ -28,12 +30,13 @@ export default function LoginScreen({navigation}) {
         <TextInput
           style={styles.TextInput}
           placeholder="Password"
+          value={password}
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <TouchableOpacity onPress={() => {{navigation.navigate("Home")}}} style={styles.loginBtn}>
+      <TouchableOpacity onPress={() => {signIn(username, password, navigation)}} style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text
         >
         
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     marginLeft: 20,
-  
+    
   },
   loginBtn: {
     width: "80%",
@@ -97,16 +100,25 @@ const styles = StyleSheet.create({
   },
 });
 
-async function addPerson(username, password) {
-  try {
-    //create a new Parse Object instance
-    const newPerson = new Parse.User();
-    //define the attributes you want for your Object
-    newPerson.setUsername(username);
-    newPerson.setPassword(password);
-    //save it on Back4App Data Store
-    await newPerson.save();
-  } catch (error) {
-    console.log('Error saving new person: ', error);
-  }
+async function signIn(username, password, navigation) {
+  return await Parse.User.logIn(username, password)
+  .then(async (loggedInUser) => {
+    // logIn returns the corresponding ParseUser object
+    Alert.alert(
+      'Success!',
+      `User ${loggedInUser.get('username')} has successfully signed in!`,
+    );
+    // To verify that this is in fact the current user, currentAsync can be used
+    const currentUser = await Parse.User.currentAsync();
+    console.log(loggedInUser === currentUser);
+    // Navigation.navigate takes the user to the screen named after the one
+    // passed as parameter
+    navigation.navigate('Home');
+    return true;
+  })
+  .catch((error) => {
+    // Error can be caused by wrong parameters or lack of Internet connection
+    Alert.alert('Error!', error.message);
+    return false;
+  });
 }
