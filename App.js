@@ -6,7 +6,7 @@ import ThirdScreen from "./Screens/ChatScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./Screens/LoginScreen";
 import SignUpScreen from "./Screens/SignupScreen";
-
+import  UserLogOut  from "./Screens/settingsScreen";
 
 
 export default function App() {
@@ -33,6 +33,8 @@ export function StackNavigator(){
       options = {{title: "Chat"}}/>
       <Stack.Screen name = "SignUp" component = {SignUpScreen}
       options = {{title: "SignUp"}}/>
+      <Stack.Screen name = "Settings" component = {UserLogOut}
+      options = {{title: "Settings"}}/>
 </Stack.Navigator>);
 }
 
@@ -52,6 +54,10 @@ const HomeTab = () =>{
         name = "Profile"
         component={SecondScreen}
         options = {{title: "Profile"}}/>
+        <Tab.Screen
+        name = "settings"
+        component={UserLogOut}
+        options = {{title: "settings"}}/>
       </Tab.Navigator>
   );
 } 
