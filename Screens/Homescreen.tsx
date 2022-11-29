@@ -1,87 +1,115 @@
-import {addDays, format} from 'date-fns';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {Agenda} from 'react-native-calendars';
+import React from 'react';
+import { Component } from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Alert,
+} from 'react-native';
+import TimeTableView, { genTimeBlock } from 'react-native-timetable';
+const events_data = [
+  {
+    title: "Math",
+    startTime: genTimeBlock("MON", 9),
+    endTime: genTimeBlock("MON", 10, 50),
+    location: "Classroom 403",
+    extra_descriptions: ["Kim", "Lee"],
+  },
+  {
+    title: "Math",
+    startTime: genTimeBlock("WED", 9),
+    endTime: genTimeBlock("WED", 10, 50),
+    location: "Classroom 403",
+    extra_descriptions: ["Kim", "Lee"],
+  },
+  {
+    title: "Physics",
+    startTime: genTimeBlock("MON", 11),
+    endTime: genTimeBlock("MON", 11, 50),
+    location: "Lab 404",
+    extra_descriptions: ["Einstein"],
+  },
+  {
+    title: "Physics",
+    startTime: genTimeBlock("WED", 11),
+    endTime: genTimeBlock("WED", 11, 50),
+    location: "Lab 404",
+    extra_descriptions: ["Einstein"],
+  },
+  {
+    title: "Mandarin",
+    startTime: genTimeBlock("TUE", 9),
+    endTime: genTimeBlock("TUE", 10, 50),
+    location: "Language Center",
+    extra_descriptions: ["Chen"],
+  },
+  {
+    title: "Japanese",
+    startTime: genTimeBlock("FRI", 9),
+    endTime: genTimeBlock("FRI", 10, 50),
+    location: "Language Center",
+    extra_descriptions: ["Nakamura"],
+  },
+  {
+    title: "Club Activity",
+    startTime: genTimeBlock("THU", 9),
+    endTime: genTimeBlock("THU", 10, 50),
+    location: "Activity Center",
+  },
+  {
+    title: "Club Activity",
+    startTime: genTimeBlock("FRI", 13, 30),
+    endTime: genTimeBlock("FRI", 14, 50),
+    location: "Activity Center",
+  },
+];
 
-type Item = {
-  name: string;
-  cookies: boolean;
-};
+export default class App extends Component {
+  numOfDays: number;
+  pivotDate: any;
+  timetableRef: any;
+  constructor(props) {
+    super(props);
+    this.numOfDays = 7;
+    this.pivotDate = genTimeBlock('mon');
+  }
 
-type Post = {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-};
-
-const App: React.FC = () => {
-  const [items, setItems] = useState<{[key: string]: Post[]}>({});
-
-  useEffect(() => {
-    // run once
-
-    const getData = async () => {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/posts',
-      );
-      const data: Post[] = await response.json();
-
-      const mappedData = data.map((post, index) => {
-        const date = addDays(new Date(), index);
-
-        return {
-          ...post,
-          date: format(date, 'yyyy-MM-dd'),
-        };
-      });
-
-      const reduced = mappedData.reduce(
-        (acc: {[key: string]: Post[]}, currentItem) => {
-          const {date, ...coolItem} = currentItem;
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(items);
-          return acc;
-        },
-        {},
-      );
-
-      setItems(reduced);
-    };
-
-    getData();
-  }, []);
-
-  const renderItem = (item: Item) => {
-    return (
-      <View style={styles.itemContainer}>
-        <Text>{item.name}</Text>
-        <Text>{item.cookies ? `🍪` : `😋`}</Text>
-      </View>
-    );
+  scrollViewRef = (ref) => {
+    this.timetableRef = ref;
   };
 
-  return (
-    <SafeAreaView style={styles.safe}>
-      <Agenda items={items} renderItem={renderItem} />
-    </SafeAreaView>
-  );
+  onEventPress = (evt) => {
+    Alert.alert("onEventPress", JSON.stringify(evt));
+  };
+
+  render() {
+    return (
+      <SafeAreaView style={{flex: 1}}>
+        <View style={styles.container}>
+          <TimeTableView
+            scrollViewRef={this.scrollViewRef}
+            events={events_data}
+            pivotTime={9}
+            pivotEndTime={20}
+            pivotDate={this.pivotDate}
+            nDays={this.numOfDays}
+            onEventPress={this.onEventPress}
+            headerStyle={styles.headerStyle}
+            formatDateHeader="dddd"
+            locale="en-US"
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
+  headerStyle: {
+    backgroundColor: '#81E1B8'
   },
-  itemContainer: {
-    backgroundColor: 'white',
-    margin: 5,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+  container: {
     flex: 1,
+    backgroundColor: '#F8F8F8',
   },
 });
-
-export default App;
