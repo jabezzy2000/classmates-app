@@ -5,8 +5,16 @@ import {
   StyleSheet,
   View,
   Alert,
+  Button,
 } from 'react-native';
 import TimeTableView, { genTimeBlock } from 'react-native-timetable';
+
+const newAssignment = () => {
+  return (
+    console.log("new assignment added")
+  )
+}
+
 const events_data = [
   {
     title: "Math",
@@ -98,6 +106,13 @@ export default class App extends Component {
             formatDateHeader="dddd"
             locale="en-US"
           />
+          
+          <Button 
+            // style={styles.Button}
+            title="Add Assignment"
+            onPress={newAssignment}
+            color="#841584"
+          />
         </View>
       </SafeAreaView>
     );
@@ -111,5 +126,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F8F8',
+  },
+  Button: {
+    backgroundColor: '00ffff',
+    textAlign: "center",
+    placeholderTextColor:'#003f5c',
+    height: 10,
+    width: 10,
+    marginBottom: 5,
+    flex: 1,
+    padding: 10,
+    marginLeft: 5,
   },
 });
