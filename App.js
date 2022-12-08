@@ -18,6 +18,7 @@ export default function App() {
 }
 
 const Stack = createStackNavigator();
+const heading = "Classmates"
 export function StackNavigator(){
   return(<Stack.Navigator>
     <Stack.Screen 
@@ -26,15 +27,15 @@ export function StackNavigator(){
       options = {{title: "Login"}}
    />
     <Stack.Screen name="Home" component={HomeTab} 
-      options = {{title: "Home"}}/>
+      options = {{title: heading}}/>
       <Stack.Screen name="Profile" component={SecondScreen} 
-      options = {{title: "Profile"}}/>
+      options = {{title: heading}}/>
       <Stack.Screen name="chat" component={ThirdScreen} 
-      options = {{title: "Chat"}}/>
+      options = {{title: heading}}/>
       <Stack.Screen name = "SignUp" component = {SignUpScreen}
-      options = {{title: "SignUp"}}/>
+      options = {{title: heading}}/>
       <Stack.Screen name = "Settings" component = {UserLogOut}
-      options = {{title: "Settings"}}/>
+      options = {{title: heading}}/>
 </Stack.Navigator>);
 }
 
