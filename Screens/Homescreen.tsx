@@ -8,12 +8,31 @@ import {
   Button,
 } from 'react-native';
 import TimeTableView, { genTimeBlock } from 'react-native-timetable';
+import list_class_assignments from 
 
-const newAssignment = () => {
-  return (
-    console.log("new assignment added")
-  )
-}
+// type Item = {
+//   class_assignments_due_today: Array<any>,
+// };
+
+// type Post = {
+//   id: number;
+//   title: string;
+//   body: string;
+//   userId: number;
+// };
+
+const GET_DETAIL_VIEW = (evt) => {
+  const course_code = (evt["title"])
+  //const [data, setData] = useState(null)
+
+  fetch('https://RemoteLoathsomeVoxels.donaldechefu1.repl.co/class_assignments_due/'+course_code)
+    .then(response => response.json())
+    .then(responseData => {
+      setData(responseData);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 
 const events_data = [
   {
@@ -138,4 +157,4 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 5,
   },
-});
+})};

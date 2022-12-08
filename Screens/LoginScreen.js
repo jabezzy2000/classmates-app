@@ -23,7 +23,7 @@ export default function LoginScreen({navigation}) {
           placeholder="Username"
           value={username}
           placeholderTextColor="#003f5c"
-          onChangeText={(text) => setUsername(text)}
+          onChangeText={(text) => setUsername("Donald")}
         />
       </View>
       <View style={styles.inputView}>
@@ -33,7 +33,7 @@ export default function LoginScreen({navigation}) {
           value={password}
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => setPassword("1234")}
         />
       </View>
       <TouchableOpacity onPress={() => {signIn(username, password, navigation)}} style={styles.loginBtn}>
