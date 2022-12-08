@@ -76,6 +76,7 @@ def get_all_assignments(course_code):
 
 
 @app.route("/add_assignment", methods=['POST'])
+#{"title": Title,"Assignment Via": Submission_Via, "Due": due_date,"userPosted": current_user, "course_code":Course_Code}
 def addAssignment(course_code, title, submission_via, due_date, user):
     if course_code.upper() in class_assignments:
         # do
