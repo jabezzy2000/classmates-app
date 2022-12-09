@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import Parse from "parse/react-native.js";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,10 +10,37 @@ import {
 } from 'react-native';
 import TimeTableView, { genTimeBlock } from 'react-native-timetable';
 
-const newAssignment = () => {
-  return (
-    console.log("new assignment added")
-  )
+async function createDialog() {
+  const Course_Code = "CSCI136-02"
+  const Title = "Valid Parenthesis"
+  const Submission_Via = "Blackboard"
+  const currentUser: Parse.User = await Parse.User.currentAsync();
+  const current_user = currentUser.get('username')
+  const due_date = "2022/12/10"
+  const data = {"title": Title,"Assignment Via": Submission_Via, "Due": due_date,"userPosted": current_user , "course_code":Course_Code}
+  newAssignment(data)
+
+};
+
+function newAssignment(data) {
+  fetch('https://ClassmatesAPI.jabezagyemang-p.repl.co/add_assignment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // template
+    //{"title": "In Order Traversals", "Assignment Via": "Blackboard", "Due": "28/11/2022","userPosted": "Jabezzy00"}
+    // {"title": Title,"Assignment Via": Submission_Via, "Due": due_date,"userPosted": current_user, "course_code":Course_Code}
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(data)
+      alert("Successfully added assignment")
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 const events_data = [
@@ -90,7 +118,7 @@ export default class App extends Component {
     Alert.alert("onEventPress", JSON.stringify(evt));
   };
 
-  render() {
+ render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <View style={styles.container}>
@@ -108,9 +136,9 @@ export default class App extends Component {
           />
           
           <Button 
-            // style={styles.Button}
             title="Add Assignment"
-            onPress={newAssignment}
+            // onPress={newAssignment}
+            onPress={createDialog}
             color="#841584"
           />
         </View>
