@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component, useState, useEffect } from 'react';
+import Parse from "parse/react-native.js";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,10 +10,95 @@ import {
 } from 'react-native';
 import TimeTableView, { genTimeBlock } from 'react-native-timetable';
 
+async function createDialog() {
+  const Course_Code = "CSCI136-02"
+  const Title = "Valid Parenthesis"
+  const Submission_Via = "Blackboard"
+  const currentUser: Parse.User = await Parse.User.currentAsync();
+  const current_user = currentUser.get('username')
+  const due_date = "2022/12/10"
+  const data = {"title": Title,"Assignment Via": Submission_Via, "Due": due_date,"userPosted": current_user , "course_code":Course_Code}
+  newAssignment(data)
 
-// type Item = {
-//   class_assignments_due_today: Array<any>,
-// };
+};
+
+function newAssignment(data) {
+  fetch('https://ClassmatesAPI.jabezagyemang-p.repl.co/add_assignment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // template
+    //{"title": "In Order Traversals", "Assignment Via": "Blackboard", "Due": "28/11/2022","userPosted": "Jabezzy00"}
+    // {"title": Title,"Assignment Via": Submission_Via, "Due": due_date,"userPosted": current_user, "course_code":Course_Code}
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(data)
+      alert("Successfully added assignment")
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+const events_data = [
+  {
+    title: "Math",
+    startTime: genTimeBlock("MON", 9),
+    endTime: genTimeBlock("MON", 10, 50),
+    location: "Classroom 403",
+    extra_descriptions: ["Kim", "Lee"],
+  },
+  {
+    title: "Math",
+    startTime: genTimeBlock("WED", 9),
+    endTime: genTimeBlock("WED", 10, 50),
+    location: "Classroom 403",
+    extra_descriptions: ["Kim", "Lee"],
+  },
+  {
+    title: "Physics",
+    startTime: genTimeBlock("MON", 11),
+    endTime: genTimeBlock("MON", 11, 50),
+    location: "Lab 404",
+    extra_descriptions: ["Einstein"],
+  },
+  {
+    title: "Physics",
+    startTime: genTimeBlock("WED", 11),
+    endTime: genTimeBlock("WED", 11, 50),
+    location: "Lab 404",
+    extra_descriptions: ["Einstein"],
+  },
+  {
+    title: "Mandarin",
+    startTime: genTimeBlock("TUE", 9),
+    endTime: genTimeBlock("TUE", 10, 50),
+    location: "Language Center",
+    extra_descriptions: ["Chen"],
+  },
+  {
+    title: "Japanese",
+    startTime: genTimeBlock("FRI", 9),
+    endTime: genTimeBlock("FRI", 10, 50),
+    location: "Language Center",
+    extra_descriptions: ["Nakamura"],
+  },
+  {
+    title: "Club Activity",
+    startTime: genTimeBlock("THU", 9),
+    endTime: genTimeBlock("THU", 10, 50),
+    location: "Activity Center",
+  },
+  {
+    title: "Club Activity",
+    startTime: genTimeBlock("FRI", 13, 30),
+    endTime: genTimeBlock("FRI", 14, 50),
+    location: "Activity Center",
+  },
+];
 
 // type Post = {
 //   id: number;
@@ -52,7 +138,7 @@ export default class App extends Component {
     
   };
 
-  render() {
+ render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <View style={styles.container}>
@@ -69,12 +155,13 @@ export default class App extends Component {
             locale="en-US"
           />
           
-          {/* <Button 
+          <Button 
             // style={styles.Button}
             title="Add Assignment"
-            onPress={newAssignment}
+            // onPress={newAssignment}
+            onPress={createDialog}
             color="#841584"
-          /> */}
+          /> 
         </View>
       </SafeAreaView>
     );
@@ -101,62 +188,4 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
-
-
-const events_data = [
-  {
-    title: "CSCI136-02",
-    startTime: genTimeBlock("MON", 9),
-    endTime: genTimeBlock("MON", 10, 50),
-    location: "Classroom 403",
-    extra_descriptions: ["Kim", "Lee"],
-  },
-  {
-    title: "CSCI136-02",
-    startTime: genTimeBlock("WED", 9),
-    endTime: genTimeBlock("WED", 10, 50),
-    location: "Classroom 403",
-    extra_descriptions: ["Kim", "Lee"],
-  },
-  {
-    title: "CSCI101-01",
-    startTime: genTimeBlock("MON", 11),
-    endTime: genTimeBlock("MON", 11, 50),
-    location: "Lab 404",
-    extra_descriptions: ["Einstein"],
-  },
-  {
-    title: "CSCI101-01",
-    startTime: genTimeBlock("WED", 11),
-    endTime: genTimeBlock("WED", 11, 50),
-    location: "Lab 404",
-    extra_descriptions: ["Einstein"],
-  },
-  {
-    title: "MATH101-01",
-    startTime: genTimeBlock("TUE", 9),
-    endTime: genTimeBlock("TUE", 10, 50),
-    location: "Language Center",
-    extra_descriptions: ["Chen"],
-  },
-  {
-    title: "ENGW102-03",
-    startTime: genTimeBlock("FRI", 9),
-    endTime: genTimeBlock("FRI", 10, 50),
-    location: "Language Center",
-    extra_descriptions: ["Nakamura"],
-  },
-  {
-    title: "MATH101-01",
-    startTime: genTimeBlock("THU", 9),
-    endTime: genTimeBlock("THU", 10, 50),
-    location: "Activity Center",
-  },
-  {
-    title: "MATH101-01",
-    startTime: genTimeBlock("FRI", 13, 30),
-    endTime: genTimeBlock("FRI", 14, 50),
-    location: "Activity Center",
-  },
-];
 
