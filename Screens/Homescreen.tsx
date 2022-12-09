@@ -45,67 +45,62 @@ function newAssignment(data) {
 
 const events_data = [
   {
-    title: "Math",
+    title: "CSCI136-02",
     startTime: genTimeBlock("MON", 9),
     endTime: genTimeBlock("MON", 10, 50),
     location: "Classroom 403",
     extra_descriptions: ["Kim", "Lee"],
   },
   {
-    title: "Math",
+    title: "CSCI136-02",
     startTime: genTimeBlock("WED", 9),
     endTime: genTimeBlock("WED", 10, 50),
     location: "Classroom 403",
     extra_descriptions: ["Kim", "Lee"],
   },
   {
-    title: "Physics",
+    title: "CSCI101-01",
     startTime: genTimeBlock("MON", 11),
     endTime: genTimeBlock("MON", 11, 50),
     location: "Lab 404",
     extra_descriptions: ["Einstein"],
   },
   {
-    title: "Physics",
+    title: "CSCI101-01",
     startTime: genTimeBlock("WED", 11),
     endTime: genTimeBlock("WED", 11, 50),
     location: "Lab 404",
     extra_descriptions: ["Einstein"],
   },
   {
-    title: "Mandarin",
+    title: "MATH101-01",
     startTime: genTimeBlock("TUE", 9),
     endTime: genTimeBlock("TUE", 10, 50),
     location: "Language Center",
     extra_descriptions: ["Chen"],
   },
   {
-    title: "Japanese",
+    title: "ENGW102-03",
     startTime: genTimeBlock("FRI", 9),
     endTime: genTimeBlock("FRI", 10, 50),
     location: "Language Center",
     extra_descriptions: ["Nakamura"],
   },
   {
-    title: "Club Activity",
+    title: "MATH101-01",
     startTime: genTimeBlock("THU", 9),
     endTime: genTimeBlock("THU", 10, 50),
     location: "Activity Center",
   },
   {
-    title: "Club Activity",
+    title: "MATH101-01",
     startTime: genTimeBlock("FRI", 13, 30),
     endTime: genTimeBlock("FRI", 14, 50),
     location: "Activity Center",
   },
 ];
 
-// type Post = {
-//   id: number;
-//   title: string;
-//   body: string;
-//   userId: number;
-// };
+
 export default class App extends Component {
 
   numOfDays: number;
