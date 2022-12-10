@@ -76,25 +76,20 @@ def get_all_assignments(course_code):
 
 
 @app.route("/add_assignment", methods=['POST'])
-#{"title": Title,"Assignment Via": Submission_Via, "Due": due_date,"userPosted": current_user, "course_code":Course_Code}
-def addAssignment(course_code, title, submission_via, due_date, user):
-    if course_code.upper() in class_assignments:
-        # do
-        lst_of_assignments = class_assignments[course_code]
-        # to avoid replicas, we check if there has already been an assignment titled the same way
-        for i in lst_of_assignments:
-            if sorted(title.lower().split()) == sorted(i["Due"].lower().split()):
-                return "assignment already been uploaded"
-        # at this point, if still running, then assignment hasnt already been uploaded
-        template = lst_of_assignments[0]
-        template["Due"] = due_date
-        template["title"] = title
-        template["Assignment Via"] = submission_via
-        class_assignments[course_code].append(template)
-        return "Executed Successfully"
-
-    else:
-        return "Error: An Error has occurred. Course not in registered Classes"
-
-
+def add_class_assignment():
+  dic = request.data
+  dic = json.loads(dic)
+#  template
+# {"title": Title,"Assignment Via": Submission_Via, "Due":due_date,"userPosted": current_user , "course_code":Course_Code}
+  #handle if course code isnt in dic
+  if dic["course_code"] not in class_assignments:
+    return "User not registered for this class"
+  else:
+    course_code = dic["course_code"]
+    del dic["course_code"]
+    temp = class_assignments[course_code]
+    temp.append(dic)
+    class_assignments[course_code] = temp
+    return jsonify("success")
+    
 app.run(host='0.0.0.0')
