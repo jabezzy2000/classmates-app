@@ -7,7 +7,6 @@ import { Alert } from 'react-native';
 
 
 Parse.setAsyncStorage(AsyncStorage);
-//You need to copy BOTH the the Application ID and the Javascript Key from: Dashboard->App Settings->Security & Keys 
 Parse.initialize('cWrnoL69586jYWVZfCu3NUJUZnQwAEBXBzxAxf2h','5asERhXmcU16wX6GdALhKLfrCVliBFZi69CDotkv');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
